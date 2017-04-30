@@ -1,0 +1,13 @@
+mybuf.mtype = 1;
+        snprintf(pid_name, SIZE_OF_PID_NAME, "%d", getpid());
+        strcpy(mybuf.mtext, pid_name);
+        len = SIZE_OF_PID_NAME;
+
+        if (msgsnd(msqid, (struct msgbuf *) &mybuf, len, 0) < 0)
+        {
+            printf("Can\'t send message to queue\n");
+            msgctl(msqid, IPC_RMID,(struct msqid_ds *) NULL);
+            exit(-1);
+        }
+		printf("child_pid = %d\n", getpid());
+        exit(0);
